@@ -78,7 +78,6 @@ def main(argv):
 
     if args.view:
         from pm4py.visualization.dfg import visualizer as dfg_visualization
-        dfg = dfg_discovery.apply(log, variant=dfg_discovery.Variants.PERFORMANCE)
         parameters = {dfg_visualization.Variants.PERFORMANCE.value.Parameters.FORMAT: 'svg'}
         gviz = dfg_visualization.apply(dfg, log=log, variant=dfg_visualization.Variants.FREQUENCY, parameters=parameters)
         dfg_visualization.save(gviz, 'dfg.svg')
@@ -87,8 +86,7 @@ def main(argv):
     for s in dfg:
         ALPHABET.add(s[0])
         ALPHABET.add(s[1])
-    print(ALPHABET)
-
+    print(dfg)
     dfg_initial_states = set()
     for ev in ALPHABET:
         counter_out = 0
