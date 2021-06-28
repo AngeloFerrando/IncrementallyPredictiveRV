@@ -139,3 +139,5 @@ cython_debug/
 
 *.svg
 *.hoa
+curiosity.xes
+curiosity1.xes
