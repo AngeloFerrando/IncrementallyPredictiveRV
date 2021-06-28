@@ -6,6 +6,7 @@ from pm4py.objects.log.util import dataframe_utils
 from pm4py.objects.conversion.log import converter as log_converter
 from pm4py.algo.discovery.dfg import algorithm as dfg_discovery
 import argparse
+import time
 sys.path.insert(0,'/usr/local/lib/python3.7/site-packages/')
 import spot
 
@@ -73,20 +74,22 @@ def main(argv):
     parser.add_argument('--view', action='store_true')
     args = parser.parse_args()
     log = xes_importer.apply(args.log)
-
+    start_time = time.time()
+    print('DFG generation started')
     dfg = dfg_discovery.apply(log)
-
+    print('DFG generation completed [' + str(time.time() - start_time) + ' seconds]')
+    start_time = time.time()
     if args.view:
         from pm4py.visualization.dfg import visualizer as dfg_visualization
         parameters = {dfg_visualization.Variants.PERFORMANCE.value.Parameters.FORMAT: 'svg'}
         gviz = dfg_visualization.apply(dfg, log=log, variant=dfg_visualization.Variants.FREQUENCY, parameters=parameters)
         dfg_visualization.save(gviz, 'dfg.svg')
-
+    print('Probabilistic Finite-State Machine generation started')
     ALPHABET = set()
     for s in dfg:
         ALPHABET.add(s[0])
         ALPHABET.add(s[1])
-    print(dfg)
+    # print(dfg)
     dfg_initial_states = set()
     for ev in ALPHABET:
         counter_out = 0
@@ -161,11 +164,15 @@ def main(argv):
         for t in mdp_transitions[s]:
             mdp_transitions[s][t] = (mdp_transitions[s][t][0], mdp_transitions[s][t][1] / sum)
     mdp = MarkovDecisionProcess(mdp_initial_states, mdp_states, mdp_transitions)
+    print('Probabilistic Finite-State Machine generation completed [' + str(time.time() - start_time) + ' seconds]')
+    start_time = time.time()
+    print('Buchi Automaton generation started')
     with open('model.hoa', 'w') as file:
         if args.threshold:
             file.write(mdp.to_hoa(args.threshold))
         else:
             file.write(mdp.to_hoa())
+    print('Buchi Automaton generation completed [' + str(time.time() - start_time) + ' seconds]')
     if args.view:
         with open('model.svg', 'w') as file:
             file.write(spot.automaton('model.hoa').show('.st').data)
