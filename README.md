@@ -31,4 +31,4 @@ To run the tool on the example (change <path_to_multimodeprv> with the correct p
 -$ python main.py ./running-example.xes 'F(check_ticket) | F(examine_casually)' ./trace.txt <path_to_multimodeprv> --threshold 0.05 --view
 ```
 
-The tool should print some information about the different phases of the algorithm (from DFG extraction to Monitor synthesis), and it should end with a RES: TRUE. Which means the LTL property has been verified by the current system execution reported in ./trace.txt.
+The tool should print some information about the different phases of the algorithm (from DFG extraction to Monitor synthesis), and it should end with RES: TRUE. Which means the LTL property has been verified by the current system execution reported in ./trace.txt.
