@@ -1,4 +1,4 @@
-# IncrementallyPredictiveRV
+# Incrementally Predictive RV
 
 A Python tool to generate incrementally predictive monitors. Given a XES file representing previous executions of the system, an LTL property to verify and a trace of events denoting the current system execution, the tool synthesises and runs a predictive monitor to conclude the satisfaction (resp. violation) of the LTL property w.r.t. the current system execution.
 
