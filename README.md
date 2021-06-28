@@ -12,15 +12,15 @@ A Python tool to generate incrementally predictive monitors. Given a XES file re
 To run the tool
 
 ```bash
--$ python main.py <path_to_XES_file> <LTL_property> <trace> <path_to_multimodeprv> --threshold <threshold> --view
+-$ python main.py <path_to_XES_file> <LTL_property> <path_to_trace_file> <path_to_multimodeprv> --threshold <threshold_value> --view
 ```
 
 where:
 - <path_to_XES_file> is the path to the XES file containing the event logs of previous system executions
 - <LTL_property> is the LTL property to verify at runtime
-- <trace> is the path to the file containing the current execution trace (the one to verify at runtime with the monitor)
+- <path_to_trace_file> is the path to the file containing the current execution trace (the one to verify at runtime with the monitor)
 - <path_to_multimodeprv> is the path to the folder where MultiModelPredictiveRuntimeVerification has been saved (first point in How to install)
-- <threshold> is the value used to prune transitions which are unlikely (according to the chosen threshold), its default value is 0.0
+- <threshold_value> is the value used to prune transitions which are unlikely (according to the chosen threshold), its default value is 0.0
 - if -- view is present, the tool also generates svg pictures in the folder for the DFG extracted through Process Mining and its corresponding Buchi Automaton
 
 ## Try an example
